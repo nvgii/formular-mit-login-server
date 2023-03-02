@@ -20,9 +20,22 @@ function checkForDuplicate(userList, username) {
     }
 }
 
+app.get('/', (req, res) => {
+    res.end('Server läuft');
+})
+
+app.get('/user/:id/:name/:age/:page', (req, res) => {
+    let id = req.params.id
+    let name = req.params.name
+    let age = req.params.age
+    let page = req.params.page
+    let string = String(id) + String(name) + String(age) + String(page)
+    res.send(string);
+})
+
 
 app.post('/register', (req, res) => {
-    fs.readFile('./userList.json', function (err, data) {
+    fs.readFile('./backend/userList.json', function (err, data) {
         const newUser = {
             id: '',
             username: '',
@@ -30,6 +43,7 @@ app.post('/register', (req, res) => {
         }
         newUser.username = req.body.username;
         newUser.password = req.body.password;
+        console.log(data);
 
         data = JSON.parse(data);
         const duplicate = checkForDuplicate(data.userList, newUser.username);
@@ -43,7 +57,7 @@ app.post('/register', (req, res) => {
             data.userList.push(newUser);
             data = JSON.stringify(data)
 
-            fs.writeFile('./userList.json', data, function (err) {
+            fs.writeFile('./backend/userList.json', data, function (err) {
                 if (err) return console.log(err);
                 let tmpUser = JSON.stringify(newUser)
                 res.status(201);
@@ -59,13 +73,12 @@ app.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    fs.readFile('./userList.json', function (err, data) {
-
+    fs.readFile('./backend/userList.json', function (err, data) {
         data = JSON.parse(data);
         const resultArray = data.userList.filter(user => user.username === username);
-        console.log(resultArray);
+
         if (resultArray[0].password === password) {
-            res.status(200);
+            res.status(201);
             res.end("login geklappt");
         } else {
             res.status(400);

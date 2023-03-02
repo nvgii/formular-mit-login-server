@@ -1,0 +1,14 @@
+{
+    "name": "formular-mit-login-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node backend/server",
+        "server": "nodemon backend/server",
+        "client": "npm start -prefix frontend",
+        "dev": "concurrently \"npm run server \" \"npm run client \""
+    },
+    "author": "",
+    "license": "ISC"
+}

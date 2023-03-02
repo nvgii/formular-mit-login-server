@@ -4,8 +4,10 @@ import { Container, Row } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const API_URL = "http://localhost:3001/login";
@@ -17,6 +19,12 @@ function Login() {
     };
     return axios.post(API_URL, user).then((response: any) => {
       console.log(response);
+      console.log(response.status);
+      if (response.status === 201) {
+        navigate("/user");
+        console.log(response);
+        console.log(response.status);
+      }
     });
   };
 
