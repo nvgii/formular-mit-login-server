@@ -15,7 +15,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
-        <Route path="user" element={<User />} />
+        <Route path="user/:id" element={<User />} />
         <Route path="todo/:id" element={<Todo />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
