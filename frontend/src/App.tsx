@@ -5,6 +5,7 @@ import Home from "./Home";
 import Login from "./components/login/login";
 import NoPage from "./components/noPage/noPage";
 import Register from "./components/register/register";
+import Todo from "./components/todo/todo";
 import User from "./components/user/user";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route path="user" element={<User />} />
+        <Route path="todo/:id" element={<Todo />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

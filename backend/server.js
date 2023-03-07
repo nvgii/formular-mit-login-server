@@ -69,17 +69,18 @@ app.post('/register', (req, res) => {
 
 })
 
-app.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-
-    fs.readFile('./backend/userList.json', function (err, data) {
+app.get('/todo/:id', (req, res) => {
+    let id = req.params.id
+    console.log(id);
+    fs.readFile('./backend/todos.json', function (err, data) {
         data = JSON.parse(data);
-        const resultArray = data.userList.filter(user => user.username === username);
+        const resultArray = data.todos.filter(todo => todo.id === id);
+        const todoData = resultArray[0]
 
-        if (resultArray[0].password === password) {
+        if (todoData !== undefined) {
+            console.log(res.url);
             res.status(201);
-            res.end("login geklappt");
+            res.send(JSON.stringify(todoData));
         } else {
             res.status(400);
             res.end("passwort falsch");
@@ -87,7 +88,34 @@ app.post('/login', (req, res) => {
 
     });
 
+
+
 })
+
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    fs.readFile('./backend/userList.json', function (err, data) {
+        data = JSON.parse(data);
+        const resultArray = data.userList.filter(user => user.username === username);
+        const userData = resultArray[0]
+
+        if (userData !== undefined && userData.password === password) {
+            console.log(res.url);
+            res.status(201);
+            res.send(JSON.stringify(userData));
+        } else {
+            res.status(400);
+            res.end("passwort falsch");
+        };
+
+    });
+
+
+
+})
+
 
 app.listen(port, () => {
     console.log("running server on ", port);
