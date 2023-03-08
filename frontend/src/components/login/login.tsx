@@ -21,7 +21,7 @@ function Login() {
       console.log(response);
       console.log(response.status);
       if (response.status === 201) {
-        navigate("/user/:" + response.data.id);
+        navigate("/user/" + response.data.id);
         console.log(response);
         console.log(response.status);
       }

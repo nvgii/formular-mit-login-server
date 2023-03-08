@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
+import { useParams } from "react-router-dom";
 
 function User() {
+  const { id } = useParams();
+  const [user, setUser] = useState({
+    id: "",
+    username: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("http://localhost:3001/user/" + id);
+      setUser(await response.json());
+    })();
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, [id]);
+
   return (
     <>
       <Nav className="justify-content-center" activeKey="/home">
@@ -22,7 +41,8 @@ function User() {
             <Row>
               <Col></Col>
               <Col>
-                <h1>Welcome User</h1>
+                {user.username}
+                <h1>Welcome </h1>
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
                     <Card.Title>User Name</Card.Title>

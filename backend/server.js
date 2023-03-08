@@ -62,7 +62,6 @@ app.post('/register', (req, res) => {
                 let tmpUser = JSON.stringify(newUser)
                 res.status(201);
                 res.end(tmpUser);
-
             });
         }
     });
@@ -85,11 +84,27 @@ app.get('/todo/:id', (req, res) => {
             res.status(400);
             res.end("passwort falsch");
         };
+    });
+})
+
+app.get('/user/:id', (req, res) => {
+    let id = req.params.id
+    console.log(id);
+    fs.readFile('./backend/userList.json', function (err, data) {
+        data = JSON.parse(data);
+        const resultArray = data.user.filter(user => user.id === id);
+        const userData = resultArray[0]
+
+        if (userData !== undefined) {
+            console.log(res.url);
+            res.status(201);
+            res.send(JSON.stringify(todoData));
+        } else {
+            res.status(400);
+            res.end("passwort falsch");
+        };
 
     });
-
-
-
 })
 
 app.post('/login', (req, res) => {
