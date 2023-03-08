@@ -43,6 +43,9 @@ function User() {
               <Col></Col>
               <Col>
                 <h1>Welcome {user.username}</h1>
+                {user.username}
+                <h1>Welcome </h1>
+
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
                     <Card.Title> {user.username}</Card.Title>
