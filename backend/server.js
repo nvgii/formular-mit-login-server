@@ -24,14 +24,24 @@ app.get('/', (req, res) => {
     res.end('Server läuft');
 })
 
-app.get('/user/:id/:name/:age/:page', (req, res) => {
-    let id = req.params.id
-    let name = req.params.name
-    let age = req.params.age
-    let page = req.params.page
-    let string = String(id) + String(name) + String(age) + String(page)
-    res.send(string);
+app.get('/user/:id', (req, res) => {
+    //get id from route
+    let id = req.params.id;
+    // read file and get data from json (userÖList)
+    fs.readFile('./backend/userList.json', function (err, data) {
+        // parse string to json object
+        data = JSON.parse(data);
+        // find user in data.userList by id
+        const user = data.userList.find(user=> user.id ===id)
+        // save user as json string in tmpUser
+        let tmpUser = JSON.stringify(user)
+        // send positive status
+        res.status(201);
+        // send user to client
+        res.send(tmpUser);
+    });
 })
+
 
 
 app.post('/register', (req, res) => {

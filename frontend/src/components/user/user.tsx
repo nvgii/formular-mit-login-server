@@ -13,6 +13,7 @@ function User() {
   });
 
   useEffect(() => {
+    console.log(id);
     (async () => {
       const response = await fetch("http://localhost:3001/user/" + id);
       setUser(await response.json());
@@ -41,11 +42,13 @@ function User() {
             <Row>
               <Col></Col>
               <Col>
+                <h1>Welcome {user.username}</h1>
                 {user.username}
                 <h1>Welcome </h1>
+
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
-                    <Card.Title>User Name</Card.Title>
+                    <Card.Title> {user.username}</Card.Title>
                     <Card.Text>You can edit your User data here.</Card.Text>
                     <Button variant="primary">Edit User Data</Button>
                   </Card.Body>
