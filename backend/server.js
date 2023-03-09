@@ -32,7 +32,7 @@ app.get('/user/:id', (req, res) => {
         // parse string to json object
         data = JSON.parse(data);
         // find user in data.userList by id
-        const user = data.userList.find(user=> user.id ===id)
+        const user = data.userList.find(user => user.id === id)
         // save user as json string in tmpUser
         let tmpUser = JSON.stringify(user)
         // send positive status
@@ -41,8 +41,6 @@ app.get('/user/:id', (req, res) => {
         res.send(tmpUser);
     });
 })
-
-
 
 app.post('/register', (req, res) => {
     fs.readFile('./backend/userList.json', function (err, data) {
@@ -94,26 +92,6 @@ app.get('/todo/:id', (req, res) => {
             res.status(400);
             res.end("passwort falsch");
         };
-    });
-})
-
-app.get('/user/:id', (req, res) => {
-    let id = req.params.id
-    console.log(id);
-    fs.readFile('./backend/userList.json', function (err, data) {
-        data = JSON.parse(data);
-        const resultArray = data.user.filter(user => user.id === id);
-        const userData = resultArray[0]
-
-        if (userData !== undefined) {
-            console.log(res.url);
-            res.status(201);
-            res.send(JSON.stringify(todoData));
-        } else {
-            res.status(400);
-            res.end("passwort falsch");
-        };
-
     });
 })
 
