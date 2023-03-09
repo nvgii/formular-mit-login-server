@@ -13,7 +13,6 @@ function User() {
   });
 
   useEffect(() => {
-    console.log(id);
     (async () => {
       const response = await fetch("http://localhost:3001/user/" + id);
       setUser(await response.json());
@@ -22,6 +21,10 @@ function User() {
       // this now gets called when the component unmounts
     };
   }, [id]);
+
+  function editUser() {
+    console.log("editUser()", id);
+  }
 
   return (
     <>
@@ -43,14 +46,15 @@ function User() {
               <Col></Col>
               <Col>
                 <h1>Welcome {user.username}</h1>
-                {user.username}
-                <h1>Welcome </h1>
-
                 <Card style={{ width: "18rem" }}>
                   <Card.Body>
-                    <Card.Title> {user.username}</Card.Title>
-                    <Card.Text>You can edit your User data here.</Card.Text>
-                    <Button variant="primary">Edit User Data</Button>
+                    <Card.Title> User: {user.username}</Card.Title>
+                    <Card.Text>
+                      If you want do edit your username click the button
+                    </Card.Text>
+                    <Button variant="primary" onClick={editUser}>
+                      Edit username
+                    </Button>
                   </Card.Body>
                 </Card>
               </Col>
