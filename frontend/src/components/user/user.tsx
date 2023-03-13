@@ -38,6 +38,8 @@ function User() {
       .then((response: any) => {
         response.data.username = username;
         console.log(response);
+        console.log(response.data.username);
+
         console.log(response.status);
       });
   }

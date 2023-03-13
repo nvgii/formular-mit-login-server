@@ -57,6 +57,7 @@ app.put('/user/:id', (req, res) => {
         // send user to client
         res.send(tmpUser);
         console.log(tmpUser);
+        console.log(username);
 
     });
 })
