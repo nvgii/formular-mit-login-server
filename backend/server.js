@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 app.get('/user/:id', (req, res) => {
     //get id from route
     let id = req.params.id;
-    // read file and get data from json (userÖList)
+    // read file and get data from json (userList)
     fs.readFile('./backend/userList.json', function (err, data) {
         // parse string to json object
         data = JSON.parse(data);
@@ -42,27 +42,24 @@ app.get('/user/:id', (req, res) => {
     });
 })
 
-/*
 app.put('/user/:id', (req, res) => {
-    //get id from route
     let id = req.params.id;
-    console.log("request body:", req.body);
-    // read file and get data from json (userÖList)
+    let username = req.body.username;
     fs.readFile('./backend/userList.json', function (err, data) {
         // parse string to json object
         data = JSON.parse(data);
         // find user in data.userList by id
-        const user = data.userList.find(user => user.id === id);        
+        const user = data.userList.find(user => user.id === id)
         // save user as json string in tmpUser
         let tmpUser = JSON.stringify(user)
         // send positive status
         res.status(201);
         // send user to client
         res.send(tmpUser);
+        console.log(tmpUser);
+
     });
 })
-*/
-
 
 app.post('/register', (req, res) => {
     fs.readFile('./backend/userList.json', function (err, data) {

@@ -1,16 +1,24 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, InputGroup, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import { useParams } from "react-router-dom";
 
 function User() {
   const { id } = useParams();
+  const [username, setUsername] = useState("");
   const [user, setUser] = useState({
     id: "",
     username: "",
     password: "",
   });
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     (async () => {
@@ -24,6 +32,14 @@ function User() {
 
   function editUser() {
     console.log("editUser()", id);
+    console.log(username);
+    return axios
+      .put("http://localhost:3001/user/" + id, user)
+      .then((response: any) => {
+        response.data.username = username;
+        console.log(response);
+        console.log(response.status);
+      });
   }
 
   return (
@@ -46,17 +62,36 @@ function User() {
               <Col></Col>
               <Col>
                 <h1>Welcome {user.username}</h1>
-                <Card style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title> User: {user.username}</Card.Title>
-                    <Card.Text>
-                      If you want do edit your username click the button
-                    </Card.Text>
-                    <Button variant="primary" onClick={editUser}>
-                      Edit username
+                <Button variant="primary" onClick={handleShow}>
+                  Edit user
+                </Button>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Change Username</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <InputGroup className="mb-3">
+                      <InputGroup.Text id="basic-addon1">
+                        Username:
+                      </InputGroup.Text>
+                      <Form.Control
+                        placeholder={user.username}
+                        aria-label="Username"
+                        onChange={(e: any) => {
+                          setUsername(e.target.value);
+                        }}
+                      />
+                    </InputGroup>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
                     </Button>
-                  </Card.Body>
-                </Card>
+                    <Button variant="primary" onClick={editUser}>
+                      Save Changes
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </Col>
               <Col></Col>
             </Row>
